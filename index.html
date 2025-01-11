@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boletim Tecnológico</title>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #333, #000);
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .edition-info {
+      text-align: center;
+      font-size: 16px;
+      color: #666;
+      margin: 15px 0;
+    }
+
+    .section-title {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* Configuração das seções para centralizar os cards */
+    .main-section, .innovation-section, .deu-ruim-section, .news-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centraliza os cards horizontalmente */
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 300px; /* Define uma largura fixa para os cards */
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 30px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Estilos para os modais */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 12px;
+      width: 60%;
+      height: 80%;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .modal-content img {
+      width: 80%;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #555;
+      text-align: justify;
+      margin-top: 20px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      color: #333;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 1024px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-section, .innovation-section, .deu-ruim-section, .news-section {
+        flex-direction: column;
+        align-items: center; /* Centraliza os cards em telas pequenas */
+      }
+
+      .card h2 {
+        font-size: 16px;
+      }
+
+      .card img {
+        height: auto;
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .modal-content {
+        width: 95%;
+        height: 90%;
+        padding: 15px;
+      }
+
+      .modal-content h2 {
+        font-size: 20px;
+      }
+
+      .modal-content p {
+        font-size: 16px;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Boletim Tecnológico</h1>
+  </header>
+
+  <div class="edition-info">
+    <p>Edição de 11/01/2025</p>
+  </div>
+
+  <!-- Seção: Inteligência Artificial -->
+  <h2 class="section-title">Inteligência Artificial</h2>
+  <div class="main-section">
+    <!-- Card 1 -->
+    <div class="card" id="card1">
+      <img src="https://img.odcdn.com.br/wp-content/uploads/2021/10/shutterstock_728204470-1024x576.jpg" 
+           alt="Agentes de IA podem te “clonar” após duas horas de conversa">
+      <h2>Agentes de IA podem te “clonar” após duas horas de conversa</h2>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card" id="card2">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/Hypes-tecnologia-2024-IA-generativa-1920x1080.jpg" 
+             alt="Em breve, agentes de IA serão os principais usuários de aplicativos">
+        <h2>Em breve, agentes de IA serão os principais usuários de aplicativos</h2>
+      </div>
+
+      <!-- Card 3 -->
+    <div class="card" id="card3">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/incendio-1024x582.png" 
+             alt="IA ajuda bombeiros a combaterem incêndios florestais nos EUA">
+        <h2>IA ajuda bombeiros a combaterem incêndios florestais nos EUA</h2>
+      </div>   
+  </div>
+
+  <!-- Seção: Inovação Tecnológica -->
+  <h2 class="section-title">Inovação Tecnológica</h2>
+  <div class="innovation-section">
+    <!-- Card 4 -->
+    <div class="card" id="card4">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/Captura-de-tela-2025-01-07-184322-2048x1115.png" 
+             alt="Nvidia vai lançar o menor supercomputador de IA do mundo">
+        <h2>Nvidia vai lançar o menor supercomputador de IA do mundo</h2>
+      </div>
+
+      <!-- Card 5 -->
+    <div class="card" id="card5">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/omi-1920x1080.jpg" 
+             alt="Novo dispositivo “lê” sua mente para te deixar mais produtivo">
+        <h2>Novo dispositivo “lê” sua mente para te deixar mais produtivo</h2>
+      </div>
+
+      <!-- Card 6 -->
+    <div class="card" id="card6">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/Captura-de-tela-2025-01-07-194016-2048x1136.png" 
+             alt="Toyota cria cidade futurista para testar produtos da montadora">
+        <h2>Toyota cria cidade futurista para testar produtos da montadora</h2>
+      </div>
+   
+  </div>
+
+  <!-- Seção: Deu Ruim -->
+  <h2 class="section-title">Deu Ruim</h2>
+  <div class="deu-ruim-section">
+    <!-- Card 7 -->
+    <div class="card" id="card7">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/05/Sam-Altman-e-1024x576.jpg" 
+             alt="Sam Altman avisa: a OpenAI está perdendo dinheiro">
+        <h2>Sam Altman avisa: a OpenAI está perdendo dinheiro</h2>
+      </div>
+
+      <!-- Card 8 -->
+    <div class="card" id="card8">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/meta-quest-pro-1-2048x782.png" 
+             alt="Meta encerra oficialmente as vendas do Quest Pro">
+        <h2>Meta encerra oficialmente as vendas do Quest Pro</h2>
+      </div>
+
+      <!-- Card 9 -->
+    <div class="card" id="card9">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/cybertruck-1-1920x1080.png" 
+             alt="Suspeito de explodir Tesla Cybertruck nos EUA teve um cúmplice: o ChatGPT">
+        <h2>Suspeito de explodir Tesla Cybertruck nos EUA teve um cúmplice: o ChatGPT</h2>
+      </div>
+
+      <!-- Card 10 -->
+    <div class="card" id="card10">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/11/inteligencia_artificial-1-1024x539.jpg" 
+             alt="Empresa demite toda equipe para usar IA, mas volta a oferecer vagas">
+        <h2>Empresa demite toda equipe para usar IA, mas volta atrás</h2>
+      </div>
+
+  
+  </div>
+
+  <!-- Seção: Notícias Variadas -->
+  <h2 class="section-title">Notícias Variadas</h2>
+  <div class="news-section">
+    <!-- Card 11 -->
+    <div class="card" id="card11">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/Destaque-Meta-Mark-Zuckerberg-scaled-1-1920x1080.jpg" 
+             alt="Meta encerra programa de diversidade após acabar com checagem de fatos nas redes sociais">
+        <h2>Meta encerra programa de diversidade após acabar com checagem de fatos nas redes sociais</h2>
+      </div>
+
+      <!-- Card 12 -->
+    <div class="card" id="card12">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/06/disneyplus-2024-star-espn-1920x1080-1-1920x1080.jpg" 
+             alt="Disney Plus: imagem vai ficar melhor, mas você não deve notar">
+        <h2>Disney Plus: imagem vai ficar melhor, mas você não deve notar</h2>
+      </div>
+
+      <!-- Card 13 -->
+    <div class="card" id="card13">
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/china-evs.jpg" 
+             alt="Carros elétricos: esta pode ser nova “guerra fria” tech">
+        <h2>Carros elétricos: esta pode ser nova “guerra fria” tech</h2>
+      </div>
+    
+  </div>
+
+  <!-- ========================== 
+       MÓDULOS (MODAIS) 
+       ========================== -->
+
+  <!-- Modal 1 -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>IA Pode Replicar Sua Personalidade em Duas Horas</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2021/10/shutterstock_728204470-1024x576.jpg" alt="Imagem representativa sobre replicação de personalidades pela IA">
+        <p>Uma descoberta recente de pesquisadores do Google e da Universidade de Stanford revela que modelos de inteligência artificial (IA) conseguem criar réplicas precisas da personalidade humana após apenas duas horas de conversa.</p>
+
+        <strong>Estudo e Metodologia</strong><br>
+        <p>No estudo, publicado no arXiv, entrevistas com mais de 1.000 indivíduos foram utilizadas para treinar agentes de IA. Durante as interações, aspectos como valores e opiniões foram analisados, permitindo que a IA captasse traços sutis que métodos tradicionais não conseguem.</p>
+
+        <strong>Precisão Impressionante</strong><br>
+        <p><strong>Resultados:</strong> A tecnologia alcançou 85% de precisão ao simular respostas humanas em testes de personalidade e desafios lógicos.</p>
+        <p><strong>Aplicações:</strong> Essa capacidade pode revolucionar áreas como pesquisas sociais, políticas públicas e análises de comportamento em larga escala.</p>
+        <p><strong>Limitações:</strong> O desempenho foi inferior em tarefas que exigem interações sociais mais complexas ou decisões econômicas.</p>
+
+        <strong>Riscos e Possibilidades Éticas</strong><br>
+        <p>Apesar do potencial promissor, o estudo alerta para o risco de abuso, como no caso de deepfakes. Ainda assim, os cientistas destacam que a tecnologia pode ser usada de forma ética para simular comportamentos humanos em experimentos controlados.</p>
+        <p>Segundo o autor principal, Joon Sung Park, essa abordagem permite testar decisões humanas em escala, com "mini-versões" de indivíduos tomando decisões em cenários virtuais.</p>
+
+        <strong>Por Que Importa?</strong><br>
+        <p>A capacidade de replicar personalidades levanta questões importantes sobre segurança, privacidade e os limites do uso responsável da IA. É um avanço que pode transformar tanto a pesquisa científica quanto as formas de manipulação digital.</p>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Agentes de IA Serão Principais Usuários de Aplicativos Até 2030</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/Hypes-tecnologia-2024-IA-generativa-1920x1080.jpg" alt="Imagem representativa de agentes de IA utilizando aplicativos">
+        <p>Um estudo da Accenture prevê que, até o final da década, agentes de inteligência artificial (IA) serão os principais usuários de aplicativos empresariais, superando o tempo médio de uso por humanos. Essa transformação deverá impactar profundamente o design, o uso e a operação dos sistemas digitais.</p>
+
+        <strong>Como Isso Vai Acontecer?</strong><br>
+        <p>Os agentes de IA expandirão os limites dos aplicativos, influenciando três áreas principais:</p>
+        <p>• <strong>Sistemas dos Agentes:</strong> permitirão interações avançadas com a programação.</p>
+        <p>• <strong>Núcleo Digital:</strong> conectará agentes a plataformas de dados para suportar tomadas de decisão.</p>
+        <p>• <strong>Interfaces Generativas:</strong> trarão personalização mais acessível e eficiente.</p>
+
+        <strong>Executivos Estão Otimistas:</strong><br>
+        <p>• 48% acreditam que agentes poderão modernizar funções do sistema.</p>
+        <p>• 46% esperam melhorias na garantia de qualidade.</p>
+        <p>• 45% preveem controle total de sistemas internos por agentes.</p>
+        <p>No entanto, apenas 29% acreditam que isso ocorrerá no curto prazo.</p>
+
+        <strong>Implicações Para Empresas</strong><br>
+        <p>Para começar a adotar agentes de IA, o relatório sugere:</p>
+        <p>• Criação de agentes internos pequenos e específicos para tarefas iniciais.</p>
+        <p>• Expansão modular das funções e dados acessados pelos agentes.</p>
+        <p>• Preparação para desenvolver agentes externos no futuro.</p>
+        <p>Essa abordagem cautelosa busca garantir que os agentes permaneçam alinhados a seus propósitos, evitando potenciais abusos ou falhas no controle.</p>
+
+        <strong>O Que Esperar?</strong><br>
+        <p>Com o avanço das IAs, a forma como interagimos com sistemas digitais pode mudar drasticamente. Aplicativos se tornarão mais autônomos, e a integração de agentes trará novas possibilidades — desde operações mais ágeis até custos reduzidos em personalização.</p>
+    </div>
+</div>
+
+<!-- Modal 3 -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>IA Auxilia Bombeiros a Combater Incêndios Florestais nos EUA</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/incendio-1024x582.png" alt="Imagem representativa do combate a incêndios com IA">
+        <p>A inteligência artificial está desempenhando um papel crucial no combate aos incêndios florestais na Califórnia, EUA, oferecendo uma resposta mais rápida e eficiente para detectar e monitorar focos de fogo.</p>
+
+        <strong>Como Funciona o Sistema?</strong><br>
+        <p>O ALERT California, desenvolvido pela Universidade da Califórnia em San Diego, utiliza uma rede de mil câmeras equipadas com aprendizado de máquina. Estas câmeras:</p>
+        <p>• Detectam novos focos de incêndio.</p>
+        <p>• Confirmam a ocorrência com alta precisão antes de alertar operadores e equipes de emergência.</p>
+        <p>O sistema já demonstrou sua eficácia em um caso recente, quando identificou um incêndio em Irvine antes que qualquer alerta humano fosse feito — a primeira vez que bombeiros foram acionados diretamente pela tecnologia.</p>
+
+        <strong>Incêndios Sem Precedentes</strong><br>
+        <p>Os incêndios na região de Los Angeles têm causado grande destruição:</p>
+        <p>• 37 mil pessoas evacuadas.</p>
+        <p>• Três grandes focos ativos: Pacific Palisades, Pasadena e Sylmar.</p>
+        <p>• Ventos de Santa Ana, com rajadas de até 160 km/h, estão agravando a situação.</p>
+        <p>Autoridades classificaram os incêndios como “sem precedentes e imprevisíveis”, destacando a importância da tecnologia como aliada no combate às chamas.</p>
+
+        <strong>Impacto da IA no Combate ao Fogo</strong><br>
+        <p>Ferramentas baseadas em IA, como o ALERT California, oferecem:</p>
+        <p>• Respostas mais rápidas.</p>
+        <p>• Monitoramento em tempo real.</p>
+        <p>• Redução de perdas humanas e materiais.</p>
+        <p>Esses avanços destacam como a tecnologia pode ser um divisor de águas em situações de emergência ambiental.</p>
+    </div>
+</div>
+
+<!-- Modal 4 -->
+<div id="modal4" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Nvidia Lançará o Menor Supercomputador de IA do Mundo</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/Captura-de-tela-2025-01-07-184322-2048x1115.png" alt="Imagem representativa do supercomputador de IA da Nvidia">
+        <p>Durante a CES 2025, a Nvidia apresentou o Project DIGITS, um supercomputador pessoal que promete revolucionar o acesso à inteligência artificial (IA). O dispositivo, que estará disponível a partir de maio por US$ 3 mil (cerca de R$ 18 mil), é compacto o suficiente para caber em uma mesa, mas potente para executar projetos avançados de IA.</p>
+
+        <strong>Potência e Inovações</strong><br>
+        <p>• <strong>Desempenho de 1 petaflop de IA:</strong> Capacidade para processar 1 quatrilhão de cálculos por segundo.</p>
+        <p>• <strong>Modelos gigantes:</strong> Suporte a modelos de linguagem com até 200 bilhões de parâmetros.</p>
+        <p>• <strong>Memória e armazenamento:</strong> 128 GB de memória e até 4 TB de armazenamento NVMe.</p>
+        <p>• <strong>Expansibilidade:</strong> Dois sistemas podem ser conectados via Nvidia ConnectX para rodar modelos de até 405 bilhões de parâmetros.</p>
+
+        <strong>Tecnologia de Ponta</strong><br>
+        <p>O sistema é equipado com o Grace Blackwell Superchip, que combina:</p>
+        <p>• <strong>GPU Nvidia Blackwell:</strong> Com núcleos CUDA de última geração e núcleos Tensor de 5ª geração.</p>
+        <p>• <strong>CPU Nvidia Grace:</strong> Com 20 núcleos baseados na arquitetura Arm, otimizados para baixo consumo de energia.</p>
+        <p>• <strong>Interconexão NVLink-C2C:</strong> Garantindo alto desempenho entre CPU e GPU.</p>
+
+        <strong>Ferramentas Para Desenvolvedores</strong><br>
+        <p>O Project DIGITS inclui uma vasta biblioteca de software da Nvidia, facilitando experimentação e prototipagem:</p>
+        <p>• Kits de desenvolvimento.</p>
+        <p>• Ferramentas de orquestração.</p>
+        <p>• Frameworks para acelerar projetos em IA.</p>
+
+        <strong>Democratizando a IA</strong><br>
+        <p>Jensen Huang, CEO da Nvidia, destacou a visão da empresa: “A IA será a corrente principal em todas as aplicações. Colocar um supercomputador de IA na mesa de cada cientista de dados e estudante é um passo importante para moldar a era da IA.”</p>
+    </div>
+</div>
+
+<!-- Modal 5 -->
+<div id="modal5" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Omi: Dispositivo Inovador Que "Lê" Sua Mente Para Aumentar Sua Produtividade</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/omi-1920x1080.jpg" alt="Imagem representativa do dispositivo Omi">
+        <p>Apresentado na CES 2025, o Omi é um dispositivo criado pela startup Based Hardware que promete transformar a interação com a tecnologia. Equipado com inteligência artificial (IA), o aparelho pode interpretar pensamentos e comandos de voz, ajudando usuários a se tornarem mais produtivos.</p>
+
+        <strong>Como Funciona o Omi?</strong><br>
+        <p>• <strong>Modo de uso:</strong> Pode ser usado como um colar ou fixado na lateral da cabeça com fita médica.</p>
+        <p>• <strong>Interação:</strong> É ativado com um simples “Ei, Omi” ou detecta automaticamente quando o usuário está falando com ele.</p>
+        <p>• <strong>Funções principais:</strong> Responde perguntas, cria listas de tarefas, organiza reuniões e oferece conselhos personalizados com base no contexto.</p>
+
+        <strong>Preocupações com Privacidade</strong><br>
+        <p>O Omi utiliza código aberto, permitindo que usuários acompanhem como seus dados são processados ou armazenem informações localmente. Essa abordagem também permite que desenvolvedores criem novos aplicativos para o dispositivo, que já conta com uma loja de mais de 250 apps.</p>
+
+        <strong>Tecnologia e Acessibilidade</strong><br>
+        <p>• <strong>Processamento:</strong> Alimentado por GPT-4o, o dispositivo processa dados em tempo real.</p>
+        <p>• <strong>Personalização:</strong> Focado em personalização e contexto, promete uma experiência fluida e natural.</p>
+        <p>• <strong>Preço:</strong> Será vendido por US$ 89 (aproximadamente R$ 543).</p>
+        <p>• <strong>Lançamento:</strong> Previsto para o segundo trimestre de 2025.</p>
+
+        <strong>Um Passo à Frente</strong><br>
+        <p>Com 5 mil usuários testando a versão beta, o Omi representa uma nova era na tecnologia vestível. Ele não tenta substituir o smartphone, mas atuar como um complemento que entende você melhor do que nunca.</p>
+    </div>
+</div>
+
+<!-- Modal 6 -->
+<div id="modal6" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Toyota Inaugura Cidade Futurista Para Testar Inovações</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/Captura-de-tela-2025-01-07-194016-2048x1136.png" alt="Imagem representativa da Woven City, cidade futurista da Toyota">
+        <p>A Toyota anunciou a conclusão da primeira fase de construção da Woven City, uma cidade futurista projetada para testar tecnologias inovadoras. Localizada na província de Shizuoka, Japão, com o Monte Fuji ao fundo, a cidade ocupará o antigo terreno da fábrica Higashi-Fuji e receberá seus primeiros moradores entre setembro e novembro de 2025.</p>
+
+        <strong>Um “Laboratório Vivo” Para Inovação</strong><br>
+        <p>• <strong>Fase inicial:</strong> A cidade começará com 100 moradores, incluindo funcionários da Toyota e do Woven by Toyota (WbyT).</p>
+        <p>• <strong>Meta populacional:</strong> Espera-se que a Woven City abrigue até 2.000 habitantes no futuro, incluindo cientistas, empreendedores e acadêmicos.</p>
+        <p>• <strong>Testes e experimentação:</strong> Os residentes serão voluntários que participarão ativamente de projetos e testes em um ambiente real e controlado.</p>
+
+        <strong>Sustentabilidade e Tecnologia no Centro</strong><br>
+        <p>• <strong>Transporte ecológico:</strong> A cidade será projetada para mobilidade com baixa ou nenhuma emissão de carbono.</p>
+        <p>• <strong>Inovação em transporte autônomo:</strong> A Toyota testará seu veículo elétrico e-Palette, voltado para logística e serviços.</p>
+        <p>• <strong>Foco em pesquisa:</strong> As áreas prioritárias incluem:</p>
+        <p>   - Mobilidade de pessoas e bens.</p>
+        <p>   - Informação.</p>
+        <p>   - Energia sustentável.</p>
+
+        <strong>Apoio à Inovação</strong><br>
+        <p>A Toyota também lançou um programa de bolsas para atrair startups e empreendedores. Empresas externas serão convidadas a usar a Woven City como base para testar soluções em tecnologia, robótica e mobilidade.</p>
+
+        <strong>Visão Para o Futuro</strong><br>
+        <p>Akio Toyoda, presidente do Conselho de Administração da Toyota, descreveu a cidade como um “campo de testes para mobilidade”. As inovações planejadas vão desde dispositivos de mobilidade pessoal, como cadeiras de rodas adaptadas, até robôs de companhia para idosos.</p>
+        <p>Woven City promete ser um marco na construção de cidades inteligentes e sustentáveis, antecipando o futuro da mobilidade global.</p>
+    </div>
+</div>
+
+<!-- Modal 7 -->
+<div id="modal7" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>OpenAI Enfrenta Prejuízos: Sam Altman Admite Custos Elevados</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/05/Sam-Altman-e-1024x576.jpg" alt="Imagem representativa sobre os desafios financeiros da OpenAI">
+        <p>Sam Altman, CEO da OpenAI, revelou que a empresa está perdendo dinheiro com o plano pago ChatGPT Pro, que custa US$ 200 por mês (cerca de R$ 1.060). Segundo Altman, o uso intensivo dos usuários ultrapassou as expectativas iniciais, tornando o modelo operacional insustentável no preço atual.</p>
+
+        <strong>O Problema dos Custos Operacionais</strong><br>
+        <p>• <strong>Gastos diários:</strong> O funcionamento do ChatGPT custa à OpenAI cerca de US$ 700 mil por dia (aproximadamente R$ 3,7 milhões).</p>
+        <p>• <strong>Perdas anuais:</strong> A empresa teve prejuízos estimados em US$ 5 bilhões em 2023 (cerca de R$ 26,5 bilhões).</p>
+        <p>• <strong>Motivos:</strong> Infraestrutura avançada de IA e custos com equipe estão entre os principais fatores que pesam no orçamento.</p>
+
+        <strong>Mudanças à Vista</strong><br>
+        <p>Para lidar com a situação, a OpenAI considera:</p>
+        <p>• <strong>Aumento de preços:</strong> Ajustar o valor do ChatGPT Pro para refletir o uso elevado.</p>
+        <p>• <strong>Modelos baseados em uso:</strong> Cobrar de acordo com a frequência de utilização dos serviços.</p>
+        <p>Apesar das dificuldades, a OpenAI projeta uma receita de US$ 11,6 bilhões em 2025 (R$ 61,7 bilhões) e espera atingir US$ 100 bilhões (R$ 530 bilhões) em 2029, apontando para um futuro financeiramente mais equilibrado.</p>
+
+        <strong>Impacto no Mercado</strong><br>
+        <p>O ChatGPT Pro, lançado no final de 2024, oferece acesso a recursos avançados, incluindo o gerador de vídeos Sora e maior flexibilidade em ferramentas. No entanto, o intenso uso pelos assinantes está pressionando a infraestrutura, destacando o desafio de manter IA acessível e lucrativa.</p>
+        <p>Enquanto a OpenAI busca soluções, o futuro dos serviços baseados em IA pode enfrentar reajustes significativos para se sustentar.</p>
+    </div>
+</div>
+
+<!-- Modal 8 -->
+<div id="modal8" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Meta Encerra Vendas do Quest Pro, mas promete novos lançamentos</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/meta-quest-pro-1-2048x782.png" alt="Imagem representativa do Quest Pro e futuros dispositivos da Meta">
+        <p>A Meta anunciou oficialmente o fim das vendas do Quest Pro, seu headset premium de realidade mista. O produto, lançado com preço inicial de US$ 1.499 (aproximadamente R$ 8.000), não alcançou o sucesso esperado, mesmo após uma redução de preço para US$ 999 (cerca de R$ 6.000).</p>
+
+        <strong>Motivos Para o Fim</strong><br>
+        <p>• <strong>Baixa demanda:</strong> Apesar de seu design avançado, o alto custo e reclamações sobre peso e funcionalidades limitaram a aceitação do dispositivo.</p>
+        <p>• <strong>Concorrência interna:</strong> O Meta Quest 3, mais acessível e com recursos aprimorados, continuou dominando as vendas.</p>
+        <p>• <strong>Produção descontinuada:</strong> A página oficial do Quest Pro agora direciona usuários para o Quest 3, que segue disponível.</p>
+
+        <strong>O Futuro da Linha Quest</strong><br>
+        <p>A Meta planeja expandir sua linha de dispositivos em 2026 com:</p>
+        <p>• Dois novos modelos do Quest 4: Uma versão padrão ("Pismo Low") e outra premium ("Pismo High").</p>
+        <p>• <strong>Óculos de realidade aumentada:</strong> Diferente do modelo Ray-Ban atual, o novo design será mais volumoso e funcional.</p>
+
+        <strong>Estratégia Para o Mercado</strong><br>
+        <p>Apesar do fim do Quest Pro, a Meta não desistiu de sua visão para realidade mista. Além dos novos lançamentos, a empresa busca integrar seus dispositivos a áreas como educação e produtividade, competindo diretamente com produtos como o Vision Pro da Apple.</p>
+        <p>Com novos modelos a caminho, a Meta reforça seu compromisso em moldar o futuro da realidade aumentada e virtual.</p>
+    </div>
+</div>
+
+<!-- Modal 9 -->
+<div id="modal9" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>ChatGPT é acusado de co-participação em caso de explosão de Tesla Cybertruck nos EUA</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/cybertruck-1-1920x1080.png" alt="Imagem representativa do incidente com Tesla Cybertruck e ChatGPT">
+        <p>Um incidente envolvendo a explosão de um Tesla Cybertruck no dia de Ano Novo, em frente ao Trump International Hotel, em Las Vegas, trouxe à tona o uso do ChatGPT em situações perigosas. Autoridades americanas confirmaram que o chatbot foi utilizado para planejar e construir o dispositivo explosivo.</p>
+
+        <strong>O Caso</strong><br>
+        <p>• <strong>Suspeito:</strong> Matthew Livelsberger, um ex-soldado do Exército dos EUA de 37 anos, foi encontrado morto no local e é considerado o único responsável pelo ataque.</p>
+        <p>• <strong>Planejamento:</strong> De acordo com a investigação, Livelsberger usou o ChatGPT para calcular e montar o explosivo, marcando o primeiro caso documentado nos EUA de uso do chatbot para fins prejudiciais.</p>
+        <p>• <strong>Motivação:</strong> As autoridades tratam o caso como uma tentativa de suicídio, sem evidências de relação com questões políticas ou outros crimes recentes, como o atropelamento em massa em Nova Orleans.</p>
+
+        <strong>Riscos do Uso de IA</strong><br>
+        <p>O xerife Kevin McMahill alertou sobre como tecnologias de inteligência artificial, como o ChatGPT, podem ser manipuladas para propósitos perigosos. Embora a OpenAI tenha projetado o chatbot para recusar solicitações prejudiciais, casos como este evidenciam vulnerabilidades no uso dessas ferramentas.</p>
+        <p>A OpenAI respondeu que está comprometida com o uso responsável da IA e reforçou que suas tecnologias são constantemente ajustadas para mitigar riscos.</p>
+
+        <strong>O Que Está Sendo Investigado</strong><br>
+        <p>• <strong>Manifesto:</strong> Um documento de seis páginas no celular do suspeito está sendo analisado pelas autoridades.</p>
+        <p>• <strong>Conexões:</strong> O FBI confirmou que Livelsberger não apresentava transtorno de estresse pós-traumático ou qualquer oposição ao presidente eleito Donald Trump.</p>
+
+        <strong>Impacto no Debate Sobre IA</strong><br>
+        <p>O incidente destaca a necessidade de regulamentação e supervisão mais rigorosas no uso de IA, especialmente com ferramentas acessíveis ao público, como o ChatGPT.</p>
+        <p>Casos como este ressaltam os desafios éticos e de segurança no avanço da inteligência artificial.</p>
+    </div>
+</div>
+
+<!-- Modal 10-->
+<div id="modal10" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Empresa Demite Toda Equipe Para Usar IA, Mas Volta Atrás</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/11/inteligencia_artificial-1-1024x539.jpg" alt="Imagem representativa do impacto da IA no trabalho">
+        <p>Uma empresa canadense de desenvolvimento de software chamou atenção ao demitir toda sua equipe de programadores, apostando exclusivamente em ferramentas de inteligência artificial (IA). A decisão, porém, durou pouco tempo, revelando os limites da substituição total de humanos por máquinas.</p>
+
+        <strong>A Aposta na IA</strong><br>
+        <p>• <strong>Decisão inicial:</strong> Wes Winder, fundador da empresa, substituiu os programadores por três IAs (o1, Lovable e Cursor), afirmando que os processos haviam se tornado "10 vezes mais rápidos".</p>
+        <p>• <strong>Resultados:</strong> Poucos dias depois, Winder publicou no LinkedIn um anúncio de vagas para programadores experientes, indicando que a estratégia não foi bem-sucedida.</p>
+
+        <strong>Críticas e Aprendizado</strong><br>
+        <p>• <strong>Reações negativas:</strong> Usuários nas redes sociais criticaram a falta de planejamento e a visão simplista do empresário sobre o papel da IA no mercado.</p>
+        <p>• <strong>Resposta:</strong> Winder admitiu ter aprendido “muitas lições diferentes” com o episódio, sem entrar em detalhes sobre os desafios enfrentados.</p>
+
+        <strong>IA e o Futuro do Trabalho</strong><br>
+        <p>Especialistas destacam que, embora as ferramentas de IA estejam transformando o desenvolvimento de software, elas não devem substituir completamente os programadores.</p>
+        <p>• <strong>Funções estratégicas:</strong> Profissionais humanos assumirão tarefas como orientar IAs, revisar resultados e criar novos produtos.</p>
+        <p>• <strong>Colaboração humano-máquina:</strong> A integração equilibrada entre humanos e IA é vista como o caminho mais eficiente.</p>
+
+        <strong>Impacto no Mercado</strong><br>
+        <p>O caso ilustra que, apesar do avanço das tecnologias, a automação total ainda enfrenta barreiras práticas, especialmente em setores que exigem criatividade, julgamento humano e supervisão técnica.</p>
+        <p>O episódio reforça que a IA é uma ferramenta poderosa, mas ainda depende de humanos para alcançar todo seu potencial.</p>
+    </div>
+</div>
+
+<!-- Modal 11 -->
+<div id="modal11" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Meta Encerra Programas de Diversidade e Checagem de Fatos, Gerando Polêmicas</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/Destaque-Meta-Mark-Zuckerberg-scaled-1-1920x1080.jpg" alt="Imagem representativa das mudanças na Meta">
+        <p>A Meta, dona do Facebook e Instagram, anunciou o fim de seus programas de diversidade, equidade e inclusão (DEI) e do sistema de checagem de fatos nas redes sociais nos Estados Unidos. A decisão, confirmada em memorando interno, reflete mudanças legais e políticas recentes no país e gerou críticas sobre o impacto na desinformação e na inclusão.</p>
+
+        <strong>Fim dos Programas de Diversidade</strong><br>
+        <p>• <strong>Motivo:</strong> Segundo a Meta, a decisão está alinhada a recentes decisões da Suprema Corte dos EUA que dificultam a implementação de medidas voltadas para diversidade nas empresas.</p>
+        <p>• <strong>Impacto:</strong> Não haverá mais vagas específicas para pessoas negras, mulheres ou membros da comunidade LGBTQIA+.</p>
+        <p>• <strong>Nova abordagem:</strong> A empresa planeja substituir os programas de DEI por modelos que “mitiguem preconceitos para todos, independentemente de sua origem”.</p>
+        <p>A saída de Roy Austin, chefe de direitos civis da Meta, também foi confirmada, ampliando o debate sobre o comprometimento da empresa com questões sociais.</p>
+
+        <strong>Fim da Checagem de Fatos</strong><br>
+        <p>• <strong>Nova abordagem:</strong> A Meta substituirá o programa de checagem de fatos por um modelo inspirado no Notas de Comunidade, já usado pelo X (antigo Twitter).</p>
+        <p>• <strong>Funcionamento:</strong> Usuários decidirão quais postagens carecem de contexto e fornecerão informações adicionais.</p>
+        <p>• <strong>Motivo:</strong> Segundo a Meta, o antigo sistema era criticado por apresentar vieses e, em alguns casos, atuar como uma ferramenta de censura.</p>
+
+        <strong>Preocupações com Desinformação</strong><br>
+        <p>Especialistas temem que essas mudanças facilitem a disseminação de notícias falsas e discursos de ódio, já que o novo sistema dependerá diretamente da colaboração dos usuários, o que pode comprometer sua eficácia.</p>
+
+        <strong>Estratégia Controversa</strong><br>
+        <p>Enquanto a Meta defende que essas ações promovem maior neutralidade e eficiência, críticos apontam que a empresa pode estar abrindo espaço para desinformação e enfraquecendo seus esforços de inclusão, em um momento em que as discussões sobre responsabilidade digital e diversidade estão em alta.</p>
+        <p>As recentes decisões da Meta destacam os desafios de equilibrar inovação, inclusão e responsabilidade no mundo das big techs.</p>
+    </div>
+</div>
+
+<!-- Modal 12 -->
+<div id="modal12" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Disney+ Adere ao HDR10+: Imagem Melhor, mas talvez você não perceba</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2024/06/disneyplus-2024-star-espn-1920x1080-1-1920x1080.jpg" alt="Imagem representativa do HDR10+ no Disney+">
+        <p>Durante a CES 2025, foi anunciado que o Disney+ agora oferece suporte ao HDR10+, formato avançado de exibição de imagem que ajusta cores e contraste dinamicamente, proporcionando uma qualidade visual superior.</p>
+
+        <strong>O Que É HDR10+?</strong><br>
+        <p>• O HDR10+ é uma evolução do High Dynamic Range (HDR), tecnologia que melhora a reprodução de cores, aumentando o contraste e a profundidade das imagens.</p>
+        <p>• Desenvolvido em parceria por 20th Century Studios, Samsung e Panasonic, ele ajusta as configurações de imagem quadro a quadro para oferecer uma experiência mais imersiva.</p>
+
+        <strong>Quem Se Beneficia?</strong><br>
+        <p>• <strong>Compatibilidade:</strong> O HDR10+ está disponível em TVs de última geração da Samsung e Panasonic, já que a Samsung, líder global em vendas de TVs, não oferece suporte ao Dolby Vision.</p>
+        <p>• <strong>Catálogo e dispositivos:</strong> Para aproveitar o HDR10+, o conteúdo (filme, série ou jogo) e o dispositivo do usuário também devem ser compatíveis.</p>
+
+        <strong>Outros Streamings com HDR10+</strong><br>
+        <p>Com essa novidade, o Disney+ se junta a outras plataformas que já suportam o HDR10+, como Prime Video, Paramount+, YouTube, Hulu e Apple TV+.</p>
+
+        <strong>Por Que Você Pode Não Notar Diferença?</strong><br>
+        <p>Mesmo com o suporte ao HDR10+, muitos usuários podem não perceber melhorias significativas devido a fatores como:</p>
+        <p>• <strong>Incompatibilidade do aparelho:</strong> TVs antigas ou sem suporte ao HDR10+ não aproveitam a tecnologia.</p>
+        <p>• <strong>Configuração inadequada:</strong> Alguns aplicativos de streaming exigem ativação manual do HDR.</p>
+        <p>• <strong>Limitações no conteúdo:</strong> Apenas produções compatíveis com HDR10+ exibem as melhorias visuais.</p>
+
+        <strong>Como Ativar o HDR</strong><br>
+        <p>Para habilitar o HDR, verifique as configurações do streaming ou do dispositivo. No caso da Netflix, por exemplo:</p>
+        <p>• Acesse “Minha Netflix”.</p>
+        <p>• Vá em “Configurações do aplicativo”.</p>
+        <p>• Ative a “Especificação de reprodução”.</p>
+
+        <p>Com o HDR10+, o Disney+ melhora ainda mais a experiência visual, mas aproveitá-la ao máximo dependerá de dispositivos e configurações adequados.</p>
+    </div>
+</div>
+
+<!-- Modal 13 -->
+<div id="modal13" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Carros Elétricos: Rivalidade Entre China e EUA Aponta Para Uma “Guerra Fria” Tecnológica</h2>
+        <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/china-evs.jpg" alt="Imagem representativa da rivalidade tecnológica entre China e EUA no setor de carros elétricos">
+        <p>A crescente rivalidade tecnológica entre China e Estados Unidos está se intensificando no setor de carros elétricos (EVs). A China planeja restringir exportações de tecnologias essenciais para a produção de baterias e semicondutores, como parte de uma estratégia para reforçar seu domínio no mercado global.</p>
+
+        <strong>O Controle Sobre o Lítio</strong><br>
+        <p>• <strong>Recurso estratégico:</strong> A China já domina o processamento global de lítio, material vital para baterias de EVs.</p>
+        <p>• <strong>Proposta de restrições:</strong> O país pretende incluir a tecnologia de cátodos de baterias em sua lista de exportações controladas, o que pode afetar diretamente os fabricantes ocidentais que dependem da expertise chinesa para extração e processamento de lítio.</p>
+        <p>• <strong>Demanda crescente:</strong> Com o aumento da produção de veículos elétricos, a demanda por lítio deve crescer exponencialmente nos próximos anos.</p>
+
+        <strong>Ações de Retaliação</strong><br>
+        <p>• Em resposta aos controles de exportação impostos pelos EUA, a China já proibiu a venda de materiais críticos, como gálio e germânio, amplamente utilizados na produção de semicondutores.</p>
+        <p>• O país também adicionou 28 empresas americanas à sua lista de controle de exportação, incluindo gigantes da defesa, aumentando a tensão na disputa comercial e tecnológica.</p>
+
+        <strong>Impactos no Mercado Global</strong><br>
+        <p>• Fabricantes como BYD e CATL, líderes chineses na produção de baterias e EVs, podem ganhar vantagem competitiva com essas medidas.</p>
+        <p>• Entretanto, a China enfrenta o desafio de equilibrar seu domínio sobre recursos estratégicos com seu papel como fornecedor global, para não prejudicar sua posição no mercado internacional.</p>
+
+        <strong>Carros Elétricos no Centro da Disputa</strong><br>
+        <p>O mercado de veículos elétricos, que já é crucial para as economias globais, deve se tornar ainda mais estratégico. A dependência de recursos controlados pela China e as sanções impostas pelos EUA sugerem que os EVs podem desempenhar um papel central em uma nova "guerra fria" tecnológica.</p>
+        <p>O futuro da mobilidade elétrica pode ser definido por essa disputa, com consequências para a inovação e o mercado global de tecnologia.</p>
+    </div>
+</div>
+
+
+
+
+  <!-- Rodapé -->
+  <footer>
+    <p>&copy; 2024 - 2025</p>
+  </footer>
+
+  <!-- Scripts para Modais -->
+  <script>
+    // Seleciona todos os cartões, modais e botões de fechamento
+    const cards = document.querySelectorAll('.card');
+    const modals = document.querySelectorAll('.modal');
+    const closes = document.querySelectorAll('.close');
+
+    // Verifica se a quantidade de cartões e modais corresponde
+    if (cards.length !== modals.length) {
+      console.warn("O número de cartões não corresponde ao número de modais. Verifique seu HTML.");
+    }
+
+    // Adiciona evento de clique aos cartões para abrir o modal correspondente
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'block'; // Exibe o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o card com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona evento de clique aos botões de fechamento para fechar o modal correspondente
+    closes.forEach((close, index) => {
+      close.addEventListener('click', () => {
+        if (modals[index]) {
+          modals[index].style.display = 'none'; // Esconde o modal correspondente
+        } else {
+          console.error(`Nenhum modal encontrado para o botão de fechamento com índice ${index}. Verifique o HTML.`);
+        }
+      });
+    });
+
+    // Adiciona funcionalidade para fechar o modal ao clicar fora dele
+    window.onclick = function (event) {
+      modals.forEach((modal) => {
+        if (event.target === modal) {
+          modal.style.display = 'none'; // Esconde o modal se o clique for fora do conteúdo
+        }
+      });
+    };
+
+    // Adiciona acessibilidade: fecha o modal ao pressionar a tecla ESC
+    window.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') { // Detecta a tecla ESC
+        modals.forEach((modal) => {
+          modal.style.display = 'none'; // Esconde todos os modais abertos
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
